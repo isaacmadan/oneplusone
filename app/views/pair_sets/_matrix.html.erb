@@ -1,0 +1,26 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th></th>
+			<% Member.all.each do |m| %>
+				<th><%= m.email_address.gsub(/@.*/, "").strip %></th>
+			<% end %>
+		</tr>
+	</thead>
+	<tbody>
+		<% Member.all.each do |m| %>
+			<tr>
+				<td><%= m.email_address.gsub(/@.*/, "").strip %></td>
+				<% Member.all.each do |m2| %>
+					<td>
+						<% if m == m2 %>
+							<span class="glyphicon glyphicon-minus"></span>
+						<% else %>
+							<%= m2.pairs_with(m).size %>
+						<% end %>
+					</td>
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

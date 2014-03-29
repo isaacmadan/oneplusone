@@ -1,0 +1,31 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th>Pair #</th>
+			<th>Member 1</th>
+			<th>Member 2</th>
+			<th># Teams in common</th>
+			<th># times paired</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @pairings.each_with_index do |(a,b),i| %>
+			<tr>
+				<td><%= i+1 %></td>
+				<td><%= a.email_address %></td>
+				<td><%= b.email_address  %></td>
+				<td><%= (a.teams & b.teams).size %></td>
+				<td><%= a.pairs_with(b).size %></td>
+			</tr>
+		<% end %>
+		<% @unpaired.each do |a| %>
+			<tr class="danger">
+				<td></td>
+				<td><%= a.email_address %></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

@@ -1,0 +1,19 @@
+== README
+
+How to use your tool
+--------------------
+This tool is a Ruby on Rails application, so it can be used online or locally. The project is deployed on Heroku at . To run locally, run 'rails s' within this project directory, and navigate to http://localhost:3000. You can also run 'rake clear_db' to clear the entire database and the cache, and 'rake init_db' to initialize the data with the sample data provided in the problem statement.
+
+The strategy you employed to generate 1+1 pairs
+-----------------------------------------------
+We start with a list of every possible combination between two people, so if we have 4 people (A, B, C, and D), there are 6 (3+2+1) unique possible one-on-one pairings (A-B, A-C, A-D, B-C, B-D, C-D). This list is cached, and refreshed if/when a new member/team is added. 
+
+This list of pairings is then sorted with a custom sort function based first on a) how often the two people in a pair have matched with each other previously (sorted ascending), and then on b) how many teams the two people in a pair have in common (sorted descending). Then, we pick off the most optimal pair, and move down the list, continuing to pick off pairs, until we've made (# of people)/2 pairs. 
+
+This system ensures that everyone will be matched with a pair, if there's an even number of people in total. If there's an odd number, a single person won't be paired each iteration. It also optimizes for people on the same teams to pair with each other and for people to not re-pair with each other until necessary.
+
+Your testing methodology
+------------------------
+I primarily used the sample organization/teams/people from the problem summary to test. I tested conformance along the way by printing variables to the server log/page, and broke the problem up into steps: getting the shell Rails app up and running, setting up the models as described, instantiating the sample data, getting the pairing system working, and then storing/displaying the pairings. The pair matrix and the two columns--number of teams in common and number of times paired--helped to verify the program was working as intended. 
+
+Anything else you found interesting or difficult while building the tool

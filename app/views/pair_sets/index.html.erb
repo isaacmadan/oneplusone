@@ -1,0 +1,23 @@
+<div class="container">
+	<div class="row">
+		<div class="col-mid-12">
+
+			<% if params[:type] == "list" %>
+				<h3>Previous pair sets</h3>
+				<% if @pair_sets %>
+					<% @pair_sets.each do |ps| %>
+						<%= link_to ps do %>
+							<%= time_ago_in_words ps.created_at %> ago
+						<% end %><br />
+					<% end %>
+				<% else %>
+					None
+				<% end %>
+			<% else %>
+				<h3># times paired</h3>
+				<%= render 'matrix' %>
+			<% end %>
+
+		</div>
+	</div>
+</div>

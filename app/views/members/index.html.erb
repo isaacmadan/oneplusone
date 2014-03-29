@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Current set of pairs</h3>
+			<% if @pair_set %>
+				<%= render 'pair_sets/pair_set' %>
+			<% else %>
+				No pair sets generated yet.
+			<% end %>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<%= form_for PairSet.new, :class => "form-inline" do |f| %>
+				<%= f.submit "Generate new pair set", :class => "btn btn-default" %>
+
+				<% if @pair_set %>
+					<%= link_to "Delete current pair set", pair_set_path(@pair_set), :method => "delete", :class => "btn btn-danger" %>
+				<% end %>
+			<% end %>
+			
+		</div>
+	</div>
+</div>
