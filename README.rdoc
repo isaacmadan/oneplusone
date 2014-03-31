@@ -6,7 +6,7 @@ This tool is a Ruby on Rails 4 application, so it can be used online or run loca
 
 Online, the project is deployed on Heroku at http://oneplusone.herokuapp.com and is initialized with the sample data from the problem statement.
 
-To run locally, cd into the project directory, run 'bundle install', run 'rails s', and navigate to http://localhost:3000. The database will be unitialized with anything in this case, so you can run 'rake init_db' to initialize the application with the sample data provided in the problem statement. Running 'rake clear_db' will clear the entire database and the cache if you want to start again from scratch.
+To run locally, ensure postgresql is installed and cd into the project directory, run 'bundle install', run 'rake db:create:all', run 'rake db:migrate', run 'rails s', and navigate to http://localhost:3000. The database will be unitialized with anything in this case, so you can run 'rake init_db' to initialize the application with the sample data provided in the problem statement. Running 'rake clear_db' will clear the entire database and the cache if you want to start again from scratch.
 
 Once the tool is up and running in the browser, if you haven't already initialized the app with sample data using 'rake init_db', you should first setup your organization (click Organization in the header), then setup your teams (click Teams in the header), and finally setup your members (click Members in the header). 
 
