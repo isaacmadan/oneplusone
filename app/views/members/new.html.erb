@@ -13,13 +13,51 @@
 
 		<div class="form-group">
 			<%= f.label :check_boxes, "Teams" %><br />
-			<% @teams.each do |t| %>
-				<%= check_box_tag "teams[#{t.id}]" %> <%= t.name %><br />
+			<% if @teams.empty? %>
+				None
+			<% else %>
+				<% @teams.each do |t| %>
+					<%= check_box_tag "teams[#{t.id}]" %> <%= t.name %><br />
+				<% end %>
 			<% end %>
 		</div>
 
 		<div class="form-group">
 			<%= f.submit "Submit", :class => "btn btn-default" %>
 		</div>
+	<% end %>
+
+	<hr>
+
+	<h3>Current members</h3>
+	<% if !@members.empty? %>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Email address</th>
+					<th>Teams</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @members.each do |m| %>
+					<tr>
+						<td><%= m.email_address %></td>
+						<td>
+							<% if m.teams.empty? %>
+								No teams
+							<% else %>
+								<% m.teams.each_with_index do |t,i| %>
+									<%= t.name %><% if i < m.teams.size-1 %>, <% end %>
+								<% end %>
+							<% end %>
+						</td>
+						<td><%= link_to "Delete", m, :method => :delete %></td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	<% else %>
+		None
 	<% end %>
 </div>

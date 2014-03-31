@@ -58,4 +58,5 @@ Ifttt::Application.routes.draw do
   resources :members
   resources :teams
   resources :pair_sets
+  resource :organization
 end

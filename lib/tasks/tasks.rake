@@ -1,3 +1,4 @@
+# initialize db with sample data provided in spec
 task :init_db => :environment do
 	team_names = [ "The Beatles", "The Quarrymen", "Wings", "Plastic Ono Band", "Traveling Wilburys" ]
 
@@ -42,6 +43,7 @@ task :init_db => :environment do
 	org.save
 end
 
+# clear database and cache
 task :clear_db => :environment do
 	Organization.delete_all
 	Team.delete_all

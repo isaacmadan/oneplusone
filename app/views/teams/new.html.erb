@@ -1,4 +1,5 @@
 <div class="container">
+	<h3>New team</h3>
 	<%= form_for @team do |f| %>
 		<div class="form-group">
 			<%= f.label :name, "Name" %>
@@ -8,5 +9,43 @@
 		<div class="form-group">
 			<%= f.submit "Submit", :class => "btn btn-default" %>
 		</div>
+	<% end %>
+
+	<hr>
+
+	<h3>Current teams</h3>
+	<% if !@teams.empty? %>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Members</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @teams.each do |t| %>
+					<tr>
+						<td>
+							<%= t.name %>
+						</td>
+						<td>
+							<% if t.members.empty? %>
+								No members
+							<% else %>
+								<% t.members.each_with_index do |m,i| %>
+									<%= m.email_address %><% if i < t.members.size-1 %>, <% end %>
+								<% end %>
+							<% end %>
+						</td>
+						<td>
+							<%= link_to "Delete", t, :method => "delete" %>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	<% else %>
+		None
 	<% end %>
 </div>

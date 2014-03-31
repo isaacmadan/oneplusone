@@ -3,6 +3,7 @@ class MembersController < ApplicationController
 	def new
 		@member = Member.new
 		@teams = Team.all
+		@members = Member.all
 	end
 
 	def create
@@ -11,7 +12,10 @@ class MembersController < ApplicationController
 
 			organization = Organization.find_by_id(params[:organization])
 			member.organization = organization
-			member.save
+			unless member.save
+				flash[:danger] = member.errors.empty? ? "Error" : member.errors.full_messages.to_sentence
+				redirect_to :back and return
+			end
 
 			if params[:teams]
 				params[:teams].each do |k,v|
@@ -27,7 +31,7 @@ class MembersController < ApplicationController
 
 		Rails.cache.clear
 		flash[:success] = "New member created!"
-		redirect_to members_path
+		redirect_to new_member_path
 	end
 
 	def index
@@ -35,7 +39,17 @@ class MembersController < ApplicationController
 		if @pair_set
 			@pairings = @pair_set.pairs.map{|x|x.members}
 			@unpaired = Member.unpaired(@pairings)
-			@pair_sets = PairSet.all.sort_by{|x|x.created_at}.reverse
+		end
+	end
+
+	def destroy
+		if m=Member.find_by_id(params[:id])
+			m.pairs.each do |p|
+				p.delete
+			end
+			m.delete
+			flash[:success] = "Member deleted."
+			redirect_to new_member_path
 		end
 	end
 

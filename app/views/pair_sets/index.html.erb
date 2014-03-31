@@ -4,18 +4,41 @@
 
 			<% if params[:type] == "list" %>
 				<h3>Previous pair sets</h3>
-				<% if @pair_sets %>
-					<% @pair_sets.each do |ps| %>
-						<%= link_to ps do %>
-							<%= time_ago_in_words ps.created_at %> ago
-						<% end %><br />
-					<% end %>
+				<% if @pair_sets && !@pair_sets.empty? %>
+					<table class="table">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @pair_sets.each_with_index do |ps,i| %>
+								<tr>
+									<td><%= i+1 %></td>
+									<td>
+										<%= link_to ps do %>
+											<%= time_ago_in_words ps.created_at %> ago
+										<% end %>
+									</td>
+									<td>
+										<%= link_to "Delete", ps, :method => :delete %>
+									</td>
+								</tr>
+							<% end %>
+						</tbody>
+					</table>
 				<% else %>
 					None
 				<% end %>
 			<% else %>
 				<h3># times paired</h3>
-				<%= render 'matrix' %>
+				<% if Member.count > 0 %>
+					<%= render 'matrix' %>
+				<% else %>
+					No members
+				<% end %>
 			<% end %>
 
 		</div>

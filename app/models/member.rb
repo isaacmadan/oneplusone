@@ -4,53 +4,25 @@ class Member < ActiveRecord::Base
 	has_and_belongs_to_many :teams
 	has_and_belongs_to_many :pairs
 
+	validates :email_address, :uniqueness => true
+    validates_format_of :email_address, :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
+
+    # returns array of members that this member shares at least one team with
 	def teammates
 		self.teams.map{|x|x.members}.flatten.select{|x|x!=self}.uniq
 	end
 
+	# returns array of unique members that this member has previously been paired with
 	def previous_pairs
 		self.pairs.map{|x|x.members}.flatten.select{|x|x!=self}.uniq
 	end
 
+	# returns array of size equal to number of times this member pairs with member supplied in parameter
 	def pairs_with(member)
 		self.pairs.map{|x|x.members}.flatten.select{|x|x == member && x!=self}
 	end
 
-	def self.all_pairings
-		pairings = smart_fetch("all_pairings", nil) {
-			Member.all.combination(2).sort{|a,b|
-				[b.first.pairs_with(b.second).size, (a.first.teams & a.second.teams).size] <=> [a.first.pairs_with(a.second).size, (b.first.teams & b.second.teams).size]
-			}.reverse
-		}
-
-		# pairings = Member.all.combination(2)
-		# pairings = pairings.sort{|a,b|
-		# 	[b.first.pairs_with(b.second).size, (a.first.teams & a.second.teams).size] <=> [a.first.pairs_with(a.second).size, (b.first.teams & b.second.teams).size]
-		# }.reverse
-
-		return pairings
-	end
-
-	# def self.current_pairings
-	# 	pairings = self.all_pairings
-	# 	pairs = []
-	# 	pair_set = PairSet.new
-	# 	while pairs.size < Member.count/2
-	# 		pairings.each do |p|
-	# 			unless pairs.flatten.include?(p.first) || pairs.flatten.include?(p.second)
-	# 				pairs << p.to_a
-	# 				pair = Pair.new
-	# 				pair.members << p.first << p.second
-	# 				pair.save
-	# 				pair_set.pairs << pair
-	# 			end
-	# 		end
-	# 	end
-	# 	pair_set.save
-
-	# 	return pairs
-	# end
-
+	# array of members that are not paired in a given pair set
 	def self.unpaired(pairings)
 		Member.all - pairings.flatten
 	end

@@ -10,7 +10,7 @@
 	<tbody>
 		<% Member.all.each do |m| %>
 			<tr>
-				<td><%= m.email_address.gsub(/@.*/, "").strip %></td>
+				<th><%= m.email_address.gsub(/@.*/, "").strip %></th>
 				<% Member.all.each do |m2| %>
 					<td>
 						<% if m == m2 %>

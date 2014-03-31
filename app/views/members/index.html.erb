@@ -1,14 +1,41 @@
 <div class="container">
+
+	<% if Organization.count == 0 || Team.count == 0 || Member.count == 0 %>
 	<div class="row">
 		<div class="col-md-12">
-			<h3>Current set of pairs</h3>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h5>Getting started</h5>
+				</div>
+				<div class="panel-body">
+					<% unless Organization.count > 0 %>
+						<p>- <%= link_to "Setup your organization", new_organization_path %></p>
+					<% end %>
+					<% unless Team.count > 0 %>
+						<p>- <%= link_to "Setup your teams", new_team_path %></p>
+					<% end %>
+					<% unless Member.count > 0 %>
+						<p>- <%= link_to "Setup your members", new_member_path %></p>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% end %>
+
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Current pair set</h3>
 			<% if @pair_set %>
 				<%= render 'pair_sets/pair_set' %>
+				Created <%= time_ago_in_words @pair_set.created_at %> ago
 			<% else %>
 				No pair sets generated yet.
 			<% end %>
 		</div>
 	</div>
+
+	<hr>
 
 	<div class="row">
 		<div class="col-md-12">

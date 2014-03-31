@@ -15,11 +15,13 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><%= link_to "New member", new_member_path %></li>
-                <li><%= link_to "New team", new_team_path %></li>
+                <li><%= link_to "Home", root_path %></li>
+                <li><%= link_to "Organization", new_organization_path %></li>
+                <li><%= link_to "Teams", new_team_path %></li>
+                <li><%= link_to "Members", new_member_path %></li>
                 <li><%= link_to "Previous pair sets", pair_sets_path(:type => "list") %></li>
                 <li><%= link_to "Pair matrix", pair_sets_path(:type => "matrix") %></li>
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
     </div>
 </div>
