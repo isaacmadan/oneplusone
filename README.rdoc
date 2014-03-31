@@ -2,7 +2,7 @@
 
 How to use the tool
 -------------------
-This tool is a Ruby on Rails 4 application, so it can be used online or run locally. The project is deployed on Heroku at http://stormy-chamber-6152.herokuapp.com. To run locally, cd into the project directory, run 'bundle install', run 'rails s', and navigate to http://localhost:3000. You can also run 'rake init_db' to initialize the application with the sample data provided in the problem statement. Running 'rake clear_db' will clear the entire database and the cache if you want to start from scratch.
+This tool is a Ruby on Rails 4 application, so it can be used online or run locally. The project is deployed on Heroku at http://oneplusone.herokuapp.com. To run locally, cd into the project directory, run 'bundle install', run 'rails s', and navigate to http://localhost:3000. You can also run 'rake init_db' to initialize the application with the sample data provided in the problem statement. Running 'rake clear_db' will clear the entire database and the cache if you want to start from scratch.
 
 Once the tool is up and running in the browser, if you haven't already initialized the app with sample data using 'rake init_db', you should first setup your organization (click Organization in the header, or navigate to /organization/new), then setup your teams (click Teams in the header, or navigate to /teams/new), and finally setup your members (click Members in the header, or navigate to /members/new). 
 

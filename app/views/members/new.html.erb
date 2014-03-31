@@ -34,14 +34,16 @@
 		<table class="table">
 			<thead>
 				<tr>
+					<th></th>
 					<th>Email address</th>
 					<th>Teams</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<% @members.each do |m| %>
+				<% @members.each_with_index do |m,i| %>
 					<tr>
+						<td><%= i+1 %></td>
 						<td><%= m.email_address %></td>
 						<td>
 							<% if m.teams.empty? %>

@@ -18,14 +18,16 @@
 		<table class="table">
 			<thead>
 				<tr>
+					<th></th>
 					<th>Name</th>
 					<th>Members</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<% @teams.each do |t| %>
+				<% @teams.each_with_index do |t,i| %>
 					<tr>
+						<td><%= i+1 %></td>
 						<td>
 							<%= t.name %>
 						</td>
