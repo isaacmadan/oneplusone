@@ -1,15 +1,19 @@
 == README
 
-How to use the tool
--------------------
-This tool is a Ruby on Rails 4 application, so it can be used online or run locally. The project is deployed on Heroku at http://oneplusone.herokuapp.com. To run locally, cd into the project directory, run 'bundle install', run 'rails s', and navigate to http://localhost:3000. You can also run 'rake init_db' to initialize the application with the sample data provided in the problem statement. Running 'rake clear_db' will clear the entire database and the cache if you want to start from scratch.
+=== How to use the tool
+-----------------------
+This tool is a Ruby on Rails 4 application, so it can be used online or run locally. 
 
-Once the tool is up and running in the browser, if you haven't already initialized the app with sample data using 'rake init_db', you should first setup your organization (click Organization in the header, or navigate to /organization/new), then setup your teams (click Teams in the header, or navigate to /teams/new), and finally setup your members (click Members in the header, or navigate to /members/new). 
+Online, the project is deployed on Heroku at http://oneplusone.herokuapp.com and is initialized with the sample data from the problem statement.
 
-Then, go to the homepage and click "Generate new pair set". This will create a set of 1+1 pairings for your members. You can delete this pair set, or you can keep creating additional pair sets. You can also explore previous pair sets in a list format (click Previous pair sets, or navigate to /pair_sets?type=list) or in a frequency matrix (click Pair matrix, or navigate to pair_sets?type).
+To run locally, cd into the project directory, run 'bundle install', run 'rails s', and navigate to http://localhost:3000. The database will be unitialized with anything in this case, so you can run 'rake init_db' to initialize the application with the sample data provided in the problem statement. Running 'rake clear_db' will clear the entire database and the cache if you want to start again from scratch.
 
-The strategy employed to generate 1+1 pairs
--------------------------------------------
+Once the tool is up and running in the browser, if you haven't already initialized the app with sample data using 'rake init_db', you should first setup your organization (click Organization in the header), then setup your teams (click Teams in the header), and finally setup your members (click Members in the header). 
+
+Then, go to the homepage and click "Generate new pair set". This will create a set of 1+1 pairings for your members. You can delete this pair set, or you can keep creating additional pair sets. You can also explore previous pair sets in a list format (click Previous pair sets in the header) or in a frequency matrix (click Pair matrix in the header).
+
+=== The strategy employed to generate 1+1 pairs
+-----------------------------------------------
 The tool starts by generating a list of every possible 1+1 pair, so if we have 4 people (labelled A, B, C, and D), there are 6 (3+2+1) unique possible one-on-one pairings (A-B, A-C, A-D, B-C, B-D, C-D). This list is then cached, and refreshed if/when a new member/team is added--as it shouldn't need to change in other circumstances.
 
 This list of pairings is then sorted with a custom multi-level sort function that employs two criteria: a) how often the two people in a pair have matched with each other previously (sorted ascending), and b) how many teams the two people in a pair have in common (sorted descending). Then, we pick off the most optimal pair on this list, and move down the list, continuing to pick off pairs that don't involve people we've already paired together, until we've made (# of people)/2 pairs. These pairs comprise a single pair set (a pair set has many pairs, and each pair in a pair set has two unique members).
@@ -18,10 +22,10 @@ This system ensures that everyone will be matched with a single other person, if
 
 The code for this strategy is in the create method in the pair_sets controller.
 
-The testing methodology
------------------------
+=== The testing methodology
+---------------------------
 I primarily used the sample organization/teams/people from the problem summary to test. I tested conformance along the way by printing variables to the server log/page, and broke the problem up into steps: getting the shell Rails app up and running, setting up the models as described in the spec, instantiating the sample data with the two rake tasks, getting the pairing system working for the first pair set, storing/displaying the pair sets, and introducing new members/teams, and then handling edge cases (validations on input, what happens when a member is deleted, etc.). The pair matrix, pair set list, and the two columns displayed--number of teams in common and number of times paired--helped to verify the program was working as intended, and I originally included them for testing purposes. I also created my own test sets of input data to try different edge cases.
 
-Things found interesting or difficult while building the tool
--------------------------------------------------------------
+=== Things found interesting or difficult while building the tool
+-----------------------------------------------------------------
 I enjoyed how the criteria could not all be met perfectly, so solving this problem required making trade-offs and trying to optimize for the best possible pair set. Also, making pairs proved challenging/interesting because generating a new pair set requires looking at previous pairings and adjusting accordingly, rather than simply cycling through each unique set of pairs based on non-changing parameters (like which teams people are on).
